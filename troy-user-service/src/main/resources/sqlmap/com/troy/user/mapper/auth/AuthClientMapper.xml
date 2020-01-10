@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.troy.user.dao.mapper.auth.AuthClientMapper">
+
+    <sql id="TABLE_NAME">auth_client</sql>
+
+    <!-- 数据表中所有column 与 Model 的属性映射-->
+    <resultMap id="BaseResultMap" type="com.troy.user.dao.model.auth.AuthClientModel">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="last_update_from_ip" jdbcType="VARCHAR" property="lastUpdateFromIp"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="enable" jdbcType="INTEGER" property="enable"/>
+        <result column="client_id" jdbcType="VARCHAR" property="clientId"/>
+        <result column="secret" jdbcType="VARCHAR" property="secret"/>
+        <result column="grant_types" jdbcType="VARCHAR" property="grantTypeSet"
+                typeHandler="com.troy.user.dao.handler.CommonsCollectionTypeHandler"/>
+        <result column="access_token_validity" jdbcType="INTEGER" property="accessTokenValidity"/>
+        <result column="refresh_token_validity" jdbcType="INTEGER" property="refreshTokenValidity"/>
+        <result column="explain" jdbcType="VARCHAR" property="explain"/>
+    </resultMap>
+
+    <resultMap id="AuthClientDetails" type="com.troy.user.dto.out.auth.client.AuthClientDetails">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="last_update_from_ip" jdbcType="VARCHAR" property="lastUpdateFromIp"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="enable" jdbcType="INTEGER" property="enable"/>
+        <result column="client_id" jdbcType="VARCHAR" property="clientId"/>
+        <result column="secret" jdbcType="VARCHAR" property="secret"/>
+        <result column="grant_types" jdbcType="VARCHAR" property="grantTypeSet"
+                typeHandler="com.troy.user.dao.handler.CommonsCollectionTypeHandler"/>
+        <result column="access_token_validity" jdbcType="INTEGER" property="accessTokenValidity"/>
+        <result column="refresh_token_validity" jdbcType="INTEGER" property="refreshTokenValidity"/>
+        <result column="explain" jdbcType="VARCHAR" property="explain"/>
+    </resultMap>
+
+    <!-- 数据表中 column 列表-->
+    <sql id="Base_Column_List">
+        id,create_time,create_by,update_time,update_by,last_update_from_ip,version,enable,client_id,secret,grant_types,access_token_validity,refresh_token_validity,`explain`
+    </sql>
+
+    <!-- 匹配查询条件，注意：Int 类型的字段在判断 != '' 时，等效于 !=0 -->
+    <sql id="Base_Where">
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="version != null">
+                and version = #{version,jdbcType=INTEGER}
+            </if>
+            <if test="enable != null">
+                and enable = #{enable,jdbcType=INTEGER}
+            </if>
+            <if test="clientId != null and clientId != ''">
+                and client_id = #{clientId,jdbcType=VARCHAR}
+            </if>
+            <if test="secret != null and secret != ''">
+                and secret = #{secret,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 除 pk_id、id、create_time、version 的字段，注意：Int 类型的字段在判断 != '' 时，等效于 !=0 -->
+    <sql id="Base_Update">
+        <set>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateFromIp != null">
+                last_update_from_ip = #{lastUpdateFromIp,jdbcType=VARCHAR},
+            </if>
+            <if test="enable != null">
+                enable = #{enable,jdbcType=INTEGER},
+            </if>
+            <if test="clientId != null">
+                client_id = #{clientId,jdbcType=VARCHAR},
+            </if>
+            <if test="secret != null">
+                secret = #{secret,jdbcType=VARCHAR},
+            </if>
+            <if test="grantTypeSet != null">
+                grant_types = #{grantTypeSet,jdbcType=VARCHAR,typeHandler=com.troy.user.dao.handler.CommonsCollectionTypeHandler},
+            </if>
+            <if test="accessTokenValidity != null">
+                access_token_validity = #{accessTokenValidity,jdbcType=INTEGER},
+            </if>
+            <if test="refreshTokenValidity != null">
+                refresh_token_validity = #{refreshTokenValidity,jdbcType=INTEGER},
+            </if>
+            <if test="explain != null">
+                `explain` = #{explain,jdbcType=VARCHAR},
+            </if>
+        </set>
+    </sql>
+
+    <!-- 必要的 statements 且 id 为 insert -->
+    <insert id="insert" parameterType="com.troy.user.dao.model.auth.AuthClientModel">
+        insert into
+        <include refid="TABLE_NAME"/>
+        (
+        id,
+        create_time,
+        create_by,
+        version,
+        enable,
+        client_id,
+        secret,
+        grant_types,
+        access_token_validity,
+        refresh_token_validity,
+        `explain`
+        )
+        values
+        (
+        #{id,jdbcType=BIGINT},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR},
+        #{version,jdbcType=INTEGER},
+        #{enable,jdbcType=TINYINT},
+        #{clientId,jdbcType=VARCHAR},
+        #{secret,jdbcType=VARCHAR},
+        #{grantTypeSet,jdbcType=VARCHAR,typeHandler=com.troy.user.dao.handler.CommonsCollectionTypeHandler},
+        #{accessTokenValidity,jdbcType=INTEGER},
+        #{refreshTokenValidity,jdbcType=INTEGER},
+        #{explain,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!-- 必要的 statements 且 id 为 deleteById -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from
+        <include refid="TABLE_NAME"/>
+        where
+        id = #{val,jdbcType=BIGINT}
+    </delete>
+
+    <!-- 必要的 statements 且 id 为 updateForSelectiveById，更新非空字段 -->
+    <update id="updateForSelectiveById" parameterType="com.troy.user.dao.model.auth.AuthClientModel">
+        update
+        <include refid="TABLE_NAME"/>
+        <include refid="Base_Update"/>
+        where
+        id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!-- 高并发下的安全更新（乐观锁） -->
+    <update id="updateForSafeById" parameterType="com.troy.user.dao.model.auth.AuthClientModel">
+        update
+        <include refid="TABLE_NAME"/>
+        set
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        update_by = #{updateBy,jdbcType=VARCHAR},
+        last_update_from_ip = #{lastUpdateFromIp,jdbcType=VARCHAR},
+        version = #{version,jdbcType=INTEGER} + 1,
+        enable = #{enable,jdbcType=INTEGER},
+        client_id = #{clientId,jdbcType=VARCHAR},
+        secret = #{secret,jdbcType=VARCHAR},
+        grant_types = #{grantTypeSet,jdbcType=VARCHAR,typeHandler=com.troy.user.dao.handler.CommonsCollectionTypeHandler},
+        access_token_validity = #{accessTokenValidity,jdbcType=INTEGER},
+        refresh_token_validity = #{refreshTokenValidity,jdbcType=INTEGER},
+        `explain` = #{explain,jdbcType=VARCHAR}
+        where
+        id = #{id,jdbcType=BIGINT}
+        and
+        version = #{version,jdbcType=INTEGER}
+    </update>
+
+    <!-- 必要的 statements 且 id 为 selectById -->
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        <include refid="TABLE_NAME"/>
+        where
+        id = #{val,jdbcType=BIGINT}
+    </select>
+
+    <!-- 必要的 statements 且 id 为 selectById -->
+    <select id="selectForAuthClientDetailsById" resultMap="AuthClientDetails" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        <include refid="TABLE_NAME"/>
+        where
+        id = #{val,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByClientId" resultMap="AuthClientDetails"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        <include refid="TABLE_NAME"/>
+        where
+        client_id = #{val,jdbcType=VARCHAR}
+    </select>
+
+    <select id="select" resultMap="AuthClientDetails"
+            parameterType="com.troy.user.dto.in.auth.client.AuthClientQueryReqData">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        <include refid="TABLE_NAME"/>
+        <where>
+            <if test="enable != null">
+                and enable = #{enable}
+            </if>
+            <if test="clientId != null and clientId != ''">
+                and client_id = #{clientId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        <include refid="TABLE_NAME"/>
+        where
+        id in
+        <foreach collection="val" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <!-- 启用或禁用客户端 -->
+    <update id="enable">
+        update
+        <include refid="TABLE_NAME"/>
+        set enable = #{enable, jdbcType=INTEGER}
+        <where>
+            id in
+            <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </update>
+</mapper>

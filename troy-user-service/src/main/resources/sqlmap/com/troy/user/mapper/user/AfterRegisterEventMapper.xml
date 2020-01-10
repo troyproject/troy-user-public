@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.troy.user.dao.mapper.user.AfterRegisterEventMapper">
+    <resultMap id="UserLoginLogsResult" type="com.troy.user.dao.model.user.AfterRegisterEventModel">
+        <result property="afterRegisterEventId" column="after_register_event_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="destination" column="destination"/>
+        <result property="eventCode" column="event_code" jdbcType="INTEGER"/>
+        <result property="eventName" column="event_name"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="response" column="response"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="lastUpdateFromIp" column="last_update_from_ip"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.troy.user.dao.model.user.AfterRegisterEventModel">
+        insert into
+        `after_register_event`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="afterRegisterEventId != null">`after_register_event_id`,</if>
+            <if test="userId != null">`user_id`,</if>
+            <if test="destination != null">`destination`,</if>
+            <if test="eventCode != null">`event_code`,</if>
+            <if test="eventName != null">`event_name`,</if>
+            <if test="status != null">`status`,</if>
+            <if test="response != null">`response`,</if>
+            <if test="remark != null">`remark`,</if>
+            <if test="createBy != null">`create_by`,</if>
+            <if test="createTime != null">`create_time`,</if>
+            <if test="updateBy != null">`update_by`,</if>
+            <if test="updateTime != null">`update_time`,</if>
+            <if test="lastUpdateFromIp != null">`last_update_from_ip`</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="afterRegisterEventId != null">#{afterRegisterEventId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="destination != null">#{destination},</if>
+            <if test="eventCode != null">#{eventCode},</if>
+            <if test="eventName != null">#{eventName},</if>
+            <if test="status != null">#{status},</if>
+            <if test="response != null">#{response},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="lastUpdateFromIp != null">#{lastUpdateFromIp}</if>
+        </trim>
+    </insert>
+</mapper>

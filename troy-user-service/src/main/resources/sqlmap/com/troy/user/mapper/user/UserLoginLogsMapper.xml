@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.troy.user.dao.mapper.user.UserLoginLogsMapper">
+    <resultMap id="UserLoginLogsResult" type="com.troy.user.dao.model.user.UserLoginLogsModel">
+        <result property="userLoginLogsId" column="user_login_logs_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="loginUsername" column="login_username"/>
+        <result property="loginIp" column="login_ip"/>
+        <result property="channel" column="channel" jdbcType="INTEGER"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="lastUpdateFromIp" column="last_update_from_ip"/>
+    </resultMap>
+
+    <resultMap id="UserLoginLogDetails" type="com.troy.user.dto.out.user.login.UserLoginLogDetails">
+        <result property="loginUsername" column="login_username" jdbcType="VARCHAR"/>
+        <result property="loginIp" column="login_ip" jdbcType="VARCHAR"/>
+        <result property="loginTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="channel" column="channel" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.troy.user.dao.model.user.UserLoginLogsModel">
+        insert into
+        `user_login_logs`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userLoginLogsId != null">`user_login_logs_id`,</if>
+            <if test="userId != null">`user_id`,</if>
+            <if test="loginUsername != null">`login_username`,</if>
+            <if test="loginIp != null">`login_ip`,</if>
+            <if test="channel != null">`channel`,</if>
+            <if test="createBy != null">`create_by`,</if>
+            <if test="createTime != null">`create_time`,</if>
+            <if test="updateBy != null">`update_by`,</if>
+            <if test="updateTime != null">`update_time`,</if>
+            <if test="lastUpdateFromIp != null">`last_update_from_ip`</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userLoginLogsId != null">#{userLoginLogsId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="loginUsername != null">#{loginUsername},</if>
+            <if test="loginIp != null">#{loginIp},</if>
+            <if test="channel != null">#{channel},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="lastUpdateFromIp != null">#{lastUpdateFromIp}</if>
+        </trim>
+    </insert>
+
+    <select id="selectForUserLoginLogDetails" resultMap="UserLoginLogDetails">
+        select
+        login_username,
+        login_ip,
+        create_time,
+        channel
+        from
+        user_login_logs
+        where
+        user_id=#{userId,jdbcType=BIGINT}
+        order by create_time desc
+		<if test="top != null">
+			limit #{top,jdbcType=INTEGER}
+		</if>
+    </select>
+
+</mapper>

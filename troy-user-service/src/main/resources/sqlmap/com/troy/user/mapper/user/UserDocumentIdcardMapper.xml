@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.troy.user.dao.mapper.user.UserDocumentIdcardMapper">
+	<resultMap id="UserDocumentIdcardResult" type="com.troy.user.dao.model.user.UserDocumentIdcardModel">
+			<result property="userDocumentIdcardId" column="user_document_idcard_id" />
+			<result property="userDocumentId" column="user_document_id" />
+			<result property="idCard" column="id_card" />
+			<result property="name" column="name" />
+			<result property="sex" column="sex" />
+			<result property="area" column="area" />
+			<result property="province" column="province" />
+			<result property="city" column="city" />
+			<result property="prefecture" column="prefecture" />
+			<result property="birthday" column="birthday" />
+			<result property="addrCode" column="addr_code" />
+			<result property="lastCode" column="last_code" />
+			<result property="status" column="status" />
+			<result property="createBy" column="create_by" />
+			<result property="createTime" column="create_time" />
+			<result property="updateBy" column="update_by" />
+			<result property="updateTime" column="update_time" />
+			<result property="lastUpdateFromIp" column="last_update_from_ip" />
+	</resultMap>
+	
+	<select id="get" parameterType="Integer" resultMap="UserDocumentIdcardResult">
+		select
+		   *
+		from `user_document_idcard`
+		where `user_document_idcard_id` = #{userDocumentIdcardId}
+	</select>
+    <select id="getByUserDocumentId" resultMap="UserDocumentIdcardResult">
+		select
+		   *
+		from `user_document_idcard`
+		where `user_document_id` = #{userDocumentId} limit 1
+	</select>
+
+    <update id="update" parameterType="com.troy.user.dao.model.user.UserDocumentIdcardModel">
+        update `user_document_idcard` 
+    	<set>
+			<if test="userDocumentId != null">`user_document_id`= #{userDocumentId},</if>
+			<if test="idCard != null">`id_card`= #{idCard},</if>
+			<if test="name != null">`name`= #{name},</if>
+			<if test="sex != null">`sex`= #{sex},</if>
+			<if test="area != null">`area`= #{area},</if>
+			<if test="province != null">`province`= #{province},</if>
+			<if test="city != null">`city`= #{city},</if>
+			<if test="prefecture != null">`prefecture`= #{prefecture},</if>
+			<if test="birthday != null">`birthday`= #{birthday},</if>
+			<if test="addrCode != null">`addr_code`= #{addrCode},</if>
+			<if test="lastCode != null">`last_code`= #{lastCode},</if>
+			<if test="status != null">`status`= #{status},</if>
+			<if test="createBy != null">`create_by`= #{createBy},</if>
+			<if test="createTime != null">`create_time`= #{createTime},</if>
+			<if test="updateBy != null">`update_by`= #{updateBy},</if>
+			<if test="updateTime != null">`update_time`= #{updateTime},</if>
+			<if test="lastUpdateFromIp != null">`last_update_from_ip`= #{lastUpdateFromIp}</if>
+	    </set>
+        where `user_document_idcard_id` = #{userDocumentIdcardId}
+	</update>
+	
+	<insert id="insert" parameterType="com.troy.user.dao.model.user.UserDocumentIdcardModel">
+		insert into 
+		`user_document_idcard`
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userDocumentIdcardId != null">`user_document_idcard_id`,</if>
+			<if test="userDocumentId != null">`user_document_id`,</if>
+			<if test="idCard != null">`id_card`,</if>
+			<if test="name != null">`name`,</if>
+			<if test="sex != null">`sex`,</if>
+			<if test="area != null">`area`,</if>
+			<if test="province != null">`province`,</if>
+			<if test="city != null">`city`,</if>
+			<if test="prefecture != null">`prefecture`,</if>
+			<if test="birthday != null">`birthday`,</if>
+			<if test="addrCode != null">`addr_code`,</if>
+			<if test="lastCode != null">`last_code`,</if>
+			<if test="status != null">`status`,</if>
+			<if test="createBy != null">`create_by`,</if>
+			<if test="createTime != null">`create_time`,</if>
+			<if test="updateBy != null">`update_by`,</if>
+			<if test="updateTime != null">`update_time`,</if>
+			<if test="lastUpdateFromIp != null">`last_update_from_ip`</if>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+	    	<if test="userDocumentIdcardId != null">#{userDocumentIdcardId},</if>
+	    	<if test="userDocumentId != null">#{userDocumentId},</if>
+	    	<if test="idCard != null">#{idCard},</if>
+	    	<if test="name != null">#{name},</if>
+	    	<if test="sex != null">#{sex},</if>
+	    	<if test="area != null">#{area},</if>
+	    	<if test="province != null">#{province},</if>
+	    	<if test="city != null">#{city},</if>
+	    	<if test="prefecture != null">#{prefecture},</if>
+	    	<if test="birthday != null">#{birthday},</if>
+	    	<if test="addrCode != null">#{addrCode},</if>
+	    	<if test="lastCode != null">#{lastCode},</if>
+	    	<if test="status != null">#{status},</if>
+	    	<if test="createBy != null">#{createBy},</if>
+	    	<if test="createTime != null">#{createTime},</if>
+	    	<if test="updateBy != null">#{updateBy},</if>
+	    	<if test="updateTime != null">#{updateTime},</if>
+	    	<if test="lastUpdateFromIp != null">#{lastUpdateFromIp}</if>
+		</trim>
+	</insert>
+	
+	<delete id="delete">
+        delete from `user_document_idcard` where `user_document_idcard_id` = #{userDocumentIdcardId}
+	</delete>
+	
+</mapper>

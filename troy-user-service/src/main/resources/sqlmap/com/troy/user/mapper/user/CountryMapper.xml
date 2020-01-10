@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.troy.user.dao.mapper.user.CountryMapper">
+    <resultMap id="baseResult" type="com.troy.user.dto.out.user.ContryDetails">
+        <result property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="ch" column="ch"/>
+        <result property="en" column="en"/>
+        <result property="dialCode" column="dial_code"/>
+
+    </resultMap>
+
+
+    <insert id="insert" parameterType="com.troy.user.dao.model.user.CountryModel">
+        insert into
+        `country`  (code,ch,en,dial_code)  values (#{code},#{ch},#{en},#{dialCode})
+
+    </insert>
+
+    <select id="selectAll" resultMap="baseResult">
+        select
+         * from country
+    </select>
+
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.troy.user.dao.mapper.user.InviteCodeMapper">
+	<resultMap id="UserResult" type="com.troy.user.dao.model.user.InviteCodeModel">
+			<result property="id" column="id" />
+			<result property="inviteCode" column="invite_code" />
+			<result property="status" column="status" />
+			<result property="createBy" column="create_by" />
+			<result property="createTime" column="create_time" />
+			<result property="updateBy" column="update_by" />
+			<result property="updateTime" column="update_time" />
+			<result property="remark" column="remark" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, invite_code, status, create_by, create_time
+    </sql>
+
+	<select id="selectByCondition" parameterType="com.troy.user.dto.in.user.InviteCodeReqData" resultMap="UserResult">
+		select
+		<include refid="Base_Column_List"/>
+		from invite_code
+		<where>
+			<if test="inviteCode != null">
+				and invite_code = #{inviteCode}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+		</where>
+		limit 1
+	</select>
+
+	<insert id="insert" parameterType="com.troy.user.dao.model.user.InviteCodeModel">
+		insert into invite_code
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">`id`,</if>
+			<if test="inviteCode != null">`invite_code`,</if>
+			<if test="status != null">`status`,</if>
+			<if test="createBy != null">`create_by`,</if>
+			<if test="createTime != null">`create_time`,</if>
+			<if test="updateBy != null">`update_by`,</if>
+			<if test="updateTime != null">`update_time`,</if>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="inviteCode != null">#{inviteCode},</if>
+			<if test="status != null">#{status},</if>
+			<if test="createBy != null">#{createBy},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="updateBy != null">#{updateBy},</if>
+			<if test="updateTime != null">#{updateTime},</if>
+		</trim>
+	</insert>
+
+	<update id="update" parameterType="com.troy.user.dao.model.user.InviteCodeModel">
+		update invite_code set status = 1, remark= #{remark} where invite_code = #{inviteCode} and status = 0
+	</update>
+
+	<!-- 批量插入生成的兑换码 -->
+	<insert id ="insertBatch" parameterType="java.util.List" >
+		 <selectKey resultType ="java.lang.Integer" keyProperty= "id"
+			 order= "AFTER">
+			 SELECT LAST_INSERT_ID()
+		 </selectKey >
+			insert into invite_code (invite_code, status, create_by, create_time)
+	   		values
+		 <foreach collection ="list" item="item" index= "index" separator =",">
+			 (
+			 #{item.inviteCode},
+			 #{item.status},
+			 #{item.createBy},
+			 #{item.createTime}
+			 )
+		 </foreach >
+	</insert >
+
+</mapper>

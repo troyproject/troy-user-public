@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.troy</groupId>
+        <artifactId>troy-baseline</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <groupId>com.troy</groupId>
+    <artifactId>troy-user</artifactId>
+    <version>1.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
+        <apache-commons-collections.version>4.4</apache-commons-collections.version>
+        <troy-notifier-api.version>1.0.0</troy-notifier-api.version>
+        <troy-trade-api.version>1.0.0-SNAPSHOT</troy-trade-api.version>
+        <hutool.version>4.6.0</hutool.version>
+        <aws-java-sdk-s3.version>1.11.155</aws-java-sdk-s3.version>
+        <swagger2.version>2.9.2</swagger2.version>
+        <aliyun-java-sdk-core.version>2.2.5</aliyun-java-sdk-core.version>
+        <aliyun-java-sdk-afs.version>1.0.0</aliyun-java-sdk-afs.version>
+    </properties>
+
+    <scm>
+        <connection>scm:git:http://gitlab.mee.network/troy/troy-user.git</connection>
+        <url>http://nexus.mee.network/repository/maven-releases/</url>
+        <developerConnection>scm:git:http://gitlab.mee.network/troy/troy-user</developerConnection>
+      <tag>HEAD</tag>
+  </scm>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.troy</groupId>
+                <artifactId>troy-user-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.troy</groupId>
+                <artifactId>troy-user-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.troy</groupId>
+                <artifactId>troy-user-dto</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.troy</groupId>
+                <artifactId>troy-user-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.troy</groupId>
+                <artifactId>troy-notifier-api</artifactId>
+                <version>${troy-notifier-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.troy</groupId>
+                <artifactId>troy-trade-api</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <modules>
+        <module>troy-user-api</module>
+        <module>troy-user-client</module>
+        <module>troy-user-dto</module>
+        <module>troy-user-web</module>
+        <module>troy-user-service</module>
+    </modules>
+
+</project>

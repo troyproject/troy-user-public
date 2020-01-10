@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.troy.user.dao.mapper.user.UserMapper">
+	<resultMap id="UserResult" type="com.troy.user.dao.model.user.UserModel">
+			<result property="userId" column="user_id" />
+			<result property="username" column="username" />
+			<result property="password" column="password" />
+		    <result property="mobileAreaCode" column="mobile_area_code" />
+			<result property="mobile" column="mobile" />
+			<result property="email" column="email" />
+			<result property="googleCode" column="google_code" />
+			<result property="grade" column="grade" />
+			<result property="gradeValue" column="grade_value" />
+			<result property="gender" column="gender" />
+			<result property="userAvatar" column="user_avatar" />
+			<result property="documentStatus" column="document_status" />
+			<result property="bindEmail" column="bind_email" />
+			<result property="bindMobile" column="bind_mobile" />
+			<result property="bindGoogleCode" column="bind_google_code" />
+			<result property="safeLevel" column="safe_level" />
+			<result property="kycLevel" column="kyc_level" />
+			<result property="myInviteCode" column="my_invite_code" />
+			<result property="inviteUserId" column="invite_user_id" />
+			<result property="registerTime" column="register_time" />
+			<result property="status" column="status" />
+			<result property="source" column="source" />
+			<result property="createBy" column="create_by" />
+			<result property="createTime" column="create_time" />
+			<result property="updateBy" column="update_by" />
+			<result property="updateTime" column="update_time" />
+			<result property="lastUpdateFromIp" column="last_update_from_ip" />
+			<result property="countryCode" column="country_code"/>
+			<result property="source" column="source" />
+			<result property="canTrade" column="can_trade" />
+			<result property="canTrans" column="can_trans" />
+			<result property="canWithdraw" column="can_withdraw" />
+			<result property="canDeposit" column="can_deposit" />
+	</resultMap>
+
+	<resultMap id="UserDetails" type="com.troy.user.dto.out.user.UserDetails">
+		<result property="userId" column="user_id" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="mobileAreaCode" column="mobile_area_code" />
+		<result property="mobile" column="mobile" />
+		<result property="email" column="email" />
+		<result property="googleCode" column="google_code" />
+		<result property="grade" column="grade" />
+		<result property="gradeValue" column="grade_value" />
+		<result property="gender" column="gender" />
+		<result property="userAvatar" column="user_avatar" />
+		<result property="documentStatus" column="document_status" />
+		<result property="bindEmail" column="bind_email" />
+		<result property="bindMobile" column="bind_mobile" />
+		<result property="bindGoogleCode" column="bind_google_code" />
+		<result property="safeLevel" column="safe_level" />
+		<result property="kycLevel" column="kyc_level" />
+		<result property="myInviteCode" column="my_invite_code" />
+		<result property="inviteUserId" column="invite_user_id" />
+		<result property="registerTime" column="register_time" />
+		<result property="status" column="status" />
+		<result property="createBy" column="create_by" />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy" column="update_by" />
+		<result property="updateTime" column="update_time" />
+		<result property="lastUpdateFromIp" column="last_update_from_ip" />
+	</resultMap>
+
+	<resultMap id="UserInfoDetailResult" type="com.troy.user.dto.out.user.UserInfoDetails">
+		<result property="userDocumentId" column="user_document_id" />
+		<result property="grade" column="grade" />
+		<result property="userId" column="user_id" />
+		<result property="documentType" column="document_type" />
+		<result property="documentName" column="document_name" />
+		<result property="documentNumber" column="document_number" />
+		<result property="documentFrontPic" column="document_front_pic" />
+		<result property="documentBackPic" column="document_back_pic" />
+		<result property="documentOtherPic" column="document_other_pic" />
+		<result property="documentStatus" column="document_status" />
+		<result property="createBy" column="create_by" />
+		<result property="createTime" column="create_time" />
+		<result property="applyTime" column="apply_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="remark" column="remark" />
+		<result property="content" column="content" />
+	</resultMap>
+
+	<resultMap id="UserPermissionResult" type="com.troy.user.dto.out.user.UserPerssionResData">
+		<result property="googleCode" column="google_code" />
+		<result property="bindGoogleCode" column="bind_google_code" />
+		<result property="email" column="email" />
+		<result property="userId" column="user_id" />
+		<result property="canTrade" column="can_trade" />
+		<result property="canTrans" column="can_trans" />
+		<result property="canWithdraw" column="can_withdraw" />
+		<result property="canDeposit" column="can_deposit" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		user_id,username,password,mobile_area_code,mobile,email,google_code,
+		grade,grade_value,gender,user_avatar,document_status,bind_email,
+		bind_mobile,bind_google_code,safe_level,kyc_level,my_invite_code,
+		invite_user_id,register_time,status,create_by,create_time,update_by,
+		update_time,last_update_from_ip,source,can_trade,can_trans,can_withdraw,can_deposit
+    </sql>
+
+	<select id="selectUserCount" parameterType="com.troy.user.dto.in.user.UserCountReqData" resultType="java.lang.Integer">
+		select
+		count(user_id)
+		from `user`
+		<where>
+			<if test="sex != null">
+				and gender = #{sex,jdbcType=INTEGER}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectByUserLoginReqData" parameterType="com.troy.user.dto.in.user.login.UserLoginReqData" resultMap="UserDetails">
+		select
+		<include refid="Base_Column_List"/>
+		from `user`
+		<where>
+			<if test="mobile != null and mobile != ''">
+				and mobile = #{mobile,jdbcType=VARCHAR}
+			</if>
+			<if test="email != null and email != ''">
+				and email = #{email,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectByIdForUserDetails" parameterType="java.lang.Long" resultMap="UserDetails">
+		select
+		<include refid="Base_Column_List"/>
+		from `user`
+		where user_id = #{v,jdbcType=BIGINT}
+	</select>
+
+	<select id="get" resultMap="UserResult">
+		select
+		<include refid="Base_Column_List"/>
+		from `user`
+		where `user_id` = #{userId,jdbcType=BIGINT}
+	</select>
+
+	<update id="unbind" parameterType="com.troy.user.dao.model.user.UserModel">
+		update `user`
+		  set `google_code`= #{googleCode},
+				`update_by`= #{updateBy},
+			`bind_google_code`= #{bindGoogleCode},
+			`safe_level`= #{safeLevel},
+			`update_time`= #{updateTime}
+		where `user_id` = #{userId}
+	</update>
+
+    <update id="update" parameterType="com.troy.user.dao.model.user.UserModel">
+		update `user`
+		<set>
+			<if test="username != null">`username`= #{username},</if>
+			<if test="password != null">`password`= #{password},</if>
+			<if test="mobileAreaCode != null">`mobile_area_code`= #{mobileAreaCode},</if>
+			<if test="mobile != null">`mobile`= #{mobile},</if>
+			<if test="email != null">`email`= #{email},</if>
+			<if test="googleCode != null">`google_code`= #{googleCode},</if>
+			<if test="grade != null">`grade`= #{grade},</if>
+			<if test="gradeValue != null">`grade_value`= #{gradeValue},</if>
+			<if test="gender != null">`gender`= #{gender},</if>
+			<if test="userAvatar != null">`user_avatar`= #{userAvatar},</if>
+			<if test="documentStatus != null">`document_status`= #{documentStatus},</if>
+			<if test="bindEmail != null">`bind_email`= #{bindEmail},</if>
+			<if test="bindMobile != null">`bind_mobile`= #{bindMobile},</if>
+			<if test="bindGoogleCode != null">`bind_google_code`= #{bindGoogleCode},</if>
+			<if test="safeLevel != null">`safe_level`= #{safeLevel},</if>
+			<if test="kycLevel != null">`kyc_level`= #{kycLevel},</if>
+			<if test="myInviteCode != null">`my_invite_code`= #{myInviteCode},</if>
+			<if test="inviteUserId != null">`invite_user_id`= #{inviteUserId},</if>
+			<if test="registerTime != null">`register_time`= #{registerTime},</if>
+			<if test="status != null">`status`= #{status},</if>
+			<if test="source != null">`status`= #{source},</if>
+			<if test="createBy != null">`create_by`= #{createBy},</if>
+			<if test="createTime != null">`create_time`= #{createTime},</if>
+			<if test="updateBy != null">`update_by`= #{updateBy},</if>
+			<if test="updateTime != null">`update_time`= #{updateTime},</if>
+			<if test="lastUpdateFromIp != null">`last_update_from_ip`= #{lastUpdateFromIp},</if>
+
+			<if test="canTrade != null">`can_trade`= #{canTrade},</if>
+			<if test="canTrans != null">`can_trans`= #{canTrans},</if>
+			<if test="canWithdraw != null">`can_withdraw`= #{canWithdraw},</if>
+			<if test="canDeposit != null">`can_deposit`= #{canDeposit},</if>
+		</set>
+		where `user_id` = #{userId}
+	</update>
+
+
+	<insert id="insert" parameterType="com.troy.user.dao.model.user.UserModel">
+		insert into
+		`user`
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">`user_id`,</if>
+			<if test="username != null">`username`,</if>
+			<if test="password != null">`password`,</if>
+			<if test="mobileAreaCode != null">`mobile_area_code`,</if>
+			<if test="mobile != null">`mobile`,</if>
+			<if test="email != null">`email`,</if>
+			<if test="googleCode != null">`google_code`,</if>
+			<if test="grade != null">`grade`,</if>
+			<if test="gradeValue != null">`grade_value`,</if>
+			<if test="gender != null">`gender`,</if>
+			<if test="userAvatar != null">`user_avatar`,</if>
+			<if test="documentStatus != null">`document_status`,</if>
+			<if test="bindEmail != null">`bind_email`,</if>
+			<if test="bindMobile != null">`bind_mobile`,</if>
+			<if test="bindGoogleCode != null">`bind_google_code`,</if>
+			<if test="safeLevel != null">`safe_level`,</if>
+			<if test="kycLevel != null">`kyc_level`,</if>
+			<if test="myInviteCode != null">`my_invite_code`,</if>
+			<if test="inviteUserId != null">`invite_user_id`,</if>
+			<if test="registerTime != null">`register_time`,</if>
+			<if test="status != null">`status`,</if>
+			<if test="source != null">`source`,</if>
+			<if test="createBy != null">`create_by`,</if>
+			<if test="createTime != null">`create_time`,</if>
+			<if test="updateBy != null">`update_by`,</if>
+			<if test="updateTime != null">`update_time`,</if>
+			<if test="lastUpdateFromIp != null">`last_update_from_ip`,</if>
+			<if test="canTrade != null">`can_trade`,</if>
+			<if test="canTrans != null">`can_trans`,</if>
+			<if test="canWithdraw != null">`can_withdraw`,</if>
+			<if test="canDeposit != null">`can_deposit`,</if>
+			<if test="emailReferrer != null">`email_referrer`,</if>
+			<if test="countryCode != null">`country_code`,</if>
+		</trim>
+		values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">#{userId},</if>
+			<if test="username != null">#{username},</if>
+			<if test="password != null">#{password},</if>
+			<if test="mobileAreaCode != null">#{mobileAreaCode},</if>
+			<if test="mobile != null">#{mobile},</if>
+			<if test="email != null">#{email},</if>
+			<if test="googleCode != null">#{googleCode},</if>
+			<if test="grade != null">#{grade},</if>
+			<if test="gradeValue != null">#{gradeValue},</if>
+			<if test="gender != null">#{gender},</if>
+			<if test="userAvatar != null">#{userAvatar},</if>
+			<if test="documentStatus != null">#{documentStatus},</if>
+			<if test="bindEmail != null">#{bindEmail},</if>
+			<if test="bindMobile != null">#{bindMobile},</if>
+			<if test="bindGoogleCode != null">#{bindGoogleCode},</if>
+			<if test="safeLevel != null">#{safeLevel},</if>
+			<if test="kycLevel != null">#{kycLevel},</if>
+			<if test="myInviteCode != null">#{myInviteCode},</if>
+			<if test="inviteUserId != null">#{inviteUserId},</if>
+			<if test="registerTime != null">#{registerTime},</if>
+			<if test="status != null">#{status},</if>
+			<if test="source != null">#{source},</if>
+			<if test="createBy != null">#{createBy},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="updateBy != null">#{updateBy},</if>
+			<if test="updateTime != null">#{updateTime},</if>
+			<if test="lastUpdateFromIp != null">#{lastUpdateFromIp},</if>
+			<if test="canTrade != null"> #{canTrade},</if>
+			<if test="canTrans != null"> #{canTrans},</if>
+			<if test="canWithdraw != null"> #{canWithdraw},</if>
+			<if test="canDeposit != null"> #{canDeposit},</if>
+			<if test="emailReferrer != null">#{emailReferrer},</if>
+			<if test="countryCode != null">#{countryCode},</if>
+
+		</trim>
+	</insert>
+
+	<delete id="delete">
+        delete from `user` where `user_id` = #{userId,jdbcType=BIGINT}
+	</delete>
+
+	<select id="getUserInfoById" resultMap="UserResult">
+		select * from user where user_id = #{userId,jdbcType=BIGINT}
+	</select>
+
+
+	<select id="queryList"  resultMap="UserInfoDetailResult">
+		select * from user where status=1
+	</select>
+
+	<select id="queryUserList" parameterType="com.troy.user.dto.in.user.UserListReqData" resultMap="UserInfoDetailResult">
+		SELECT u.user_id,u.grade,ud.user_document_id,ud.document_name,ud.update_by,ud.document_type,ud.document_back_pic,ud.document_front_pic,ud.document_other_pic,ud.document_number,ud.document_status,ud.create_time,
+		ud.update_time,ud.remark,ud.content,DATE_FORMAT(ud.apply_time,'%Y-%m-%d %H:%i:%s') apply_time from user u RIGHT JOIN user_document ud on u.user_id=ud.user_id
+		<where>
+			<if test="userId != null and userId != ''">
+				and u.user_id = #{userId}
+			</if>
+			<if test="grade != null and grade != ''">
+				and grade = #{grade}
+			</if>
+			<if test="documentType != null and documentType != ''">
+				and document_type = #{documentType}
+			</if>
+			<if test="documentNumber != null and documentNumber != ''">
+				and document_number = #{documentNumber}
+			</if>
+			<if test="documentStatus != null and documentStatus != ''">
+				and document_status = #{documentStatus}
+			</if>
+			<if test="startTime!=null and startTime!=''">
+				ud.create_time >= #{startTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="endTime!=null and endTime!=''">
+				and #{endTime,jdbcType=TIMESTAMP} >= ud.create_time
+			</if>
+
+			<if test="startCheckTime!=null and startCheckTime!=''">
+				ud.update_time >= #{startCheckTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="endCheckTime!=null and endCheckTime!=''">
+				and #{endCheckTime,jdbcType=TIMESTAMP} >= ud.update_time
+			</if>
+		</where>
+		order by ud.apply_time desc
+	</select>
+
+
+	<select id="getUserInfoByMobileOrPhone" resultMap="UserDetails">
+		select * from user
+		<where>
+			<if test="email != null and email != ''">
+				and email = #{email}
+			</if>
+			<if test="mobile != null and mobile != ''">
+				and mobile = #{mobile}
+			</if>
+		</where>
+		limit 1
+	</select>
+
+	<select id="getUserRight" parameterType="com.troy.user.dto.in.user.UserRightReqData" resultMap="UserPermissionResult">
+		SELECT * from user
+		<where>
+			<if test="email != null and email != ''">
+				and email = #{email}
+			</if>
+		</where>
+		order by  create_time desc
+	</select>
+
+	<update id="unbindMobile" parameterType="com.troy.user.dao.model.user.UserModel">
+		update `user` set
+		`mobile_area_code`= #{mobileAreaCode},
+		`mobile`= #{mobile},
+		`bind_mobile`= #{bindMobile},
+		`safe_level`= #{safeLevel},
+		`update_by`= #{updateBy},
+		`update_time`= #{updateTime}
+		where `user_id` = #{userId}
+	</update>
+
+	<update id="unbindEmail" parameterType="com.troy.user.dao.model.user.UserModel">
+		update `user` set
+		`email`= #{email},
+		`bind_email`= #{bindEmail},
+		`safe_level`= #{safeLevel},
+		`update_by`= #{updateBy},
+		`update_time`= #{updateTime}
+		where `user_id` = #{userId}
+	</update>
+
+	<select id="queryByCondition" parameterType="com.troy.user.dto.in.user.UserBindMobileExistReqData" resultMap="UserDetails">
+		select
+		<include refid="Base_Column_List"/>
+		from `user`
+		<where>
+			<if test="mobile != null and mobile != ''">
+				and mobile = #{mobile,jdbcType=VARCHAR}
+			</if>
+			<if test="email != null and email != ''">
+				and email = #{email,jdbcType=VARCHAR}
+			</if>
+			<if test="bindMobile != null and bindMobile !=''">
+				and bind_mobile = #{bindMobile}
+			</if>
+		</where>
+		limit 1
+	</select>
+
+</mapper>
